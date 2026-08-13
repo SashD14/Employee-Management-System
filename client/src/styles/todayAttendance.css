@@ -1,0 +1,301 @@
+.today-attendance {
+    margin: 24px;
+
+    padding: 24px;
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.today-attendance-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+
+.today-attendance-header h2 {
+    margin: 0 0 5px;
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+    color: #111827;
+}
+
+
+.today-attendance-header p {
+    margin: 0;
+
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+.attendance-date {
+    padding: 7px 12px;
+
+    border-radius: 8px;
+
+    background: #f3f4f6;
+
+    color: #555;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   ATTENDANCE LIST
+========================= */
+
+.attendance-list {
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.attendance-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+.attendance-row:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================
+   EMPLOYEE
+========================= */
+
+.attendance-employee {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+.attendance-avatar {
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #2864e8;
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    flex-shrink: 0;
+}
+
+
+.attendance-employee h3 {
+    margin: 0 0 4px;
+
+    font-size: 14px;
+
+    color: #111827;
+}
+
+
+.attendance-employee p {
+    margin: 0;
+
+    font-size: 13px;
+
+    color: #666;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.attendance-status {
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+.attendance-status.present {
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+
+.attendance-status.absent {
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+
+.attendance-status.leave {
+    background: #fef3c7;
+
+    color: #d97706;
+}
+
+
+.attendance-status.half-day {
+    background: #dbeafe;
+
+    color: #2563eb;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.attendance-footer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-top: 18px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid #eeeeee;
+
+    font-size: 13px;
+
+    color: #666;
+}
+
+
+.attendance-footer button {
+    border: none;
+
+    background: transparent;
+
+    color: #2864e8;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    padding: 4px 0;
+}
+
+
+.attendance-footer button:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.no-attendance {
+    margin: 20px 0;
+
+    text-align: center;
+
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+    .today-attendance {
+        margin: 20px 15px 0;
+
+        padding: 18px;
+    }
+
+
+    .today-attendance-header {
+        align-items: flex-start;
+
+        gap: 12px;
+
+        flex-direction: column;
+    }
+
+
+    .attendance-row {
+        gap: 12px;
+    }
+
+
+    .attendance-status {
+        flex-shrink: 0;
+    }
+
+
+    .attendance-footer {
+        gap: 12px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+}
+/* =========================
+   NOT MARKED
+========================= */
+
+.attendance-status.not-marked {
+    background: #f3f4f6;
+
+    color: #6b7280;
+}

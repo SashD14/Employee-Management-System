@@ -1,0 +1,441 @@
+.employees-page {
+    padding: 24px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.employees-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+
+.employees-header h1 {
+    margin: 0 0 6px;
+
+    font-size: 28px;
+
+    color: #111827;
+}
+
+
+.employees-header p {
+    margin: 0;
+
+    font-size: 14px;
+
+    color: #666;
+}
+
+
+/* =========================
+   ADD BUTTON
+========================= */
+
+.add-employee-button {
+    border: none;
+
+    padding: 11px 18px;
+
+    border-radius: 8px;
+
+    background: #2864e8;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.add-employee-button:hover {
+    opacity: 0.9;
+
+    transform: translateY(-1px);
+}
+
+
+.add-employee-button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================
+   TOOLS
+========================= */
+
+.employee-tools {
+    display: grid;
+
+    grid-template-columns:
+        minmax(200px, 1fr)
+        180px
+        160px
+        160px;
+
+    gap: 14px;
+
+    margin-bottom: 25px;
+}
+
+
+.employee-tools input,
+.employee-tools select {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border: 1px solid #d9dce1;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.employee-tools input:focus,
+.employee-tools select:focus {
+    border-color: #2864e8;
+
+    box-shadow:
+        0 0 0 3px rgba(40, 100, 232, 0.1);
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.employee-form {
+    margin-bottom: 30px;
+
+    padding: 24px;
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+
+.employee-form-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+
+.employee-form-header h2 {
+    margin: 0;
+
+    font-size: 20px;
+
+    color: #111827;
+}
+
+
+.close-form-button {
+    width: 32px;
+
+    height: 32px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f1f3f5;
+
+    color: #444;
+
+    font-size: 20px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease;
+}
+
+
+.close-form-button:hover {
+    background: #e5e7eb;
+}
+
+
+.employee-form label {
+    display: block;
+
+    margin: 14px 0 6px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #444;
+}
+
+
+.employee-form input,
+.employee-form select {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border: 1px solid #d9dce1;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.employee-form input:focus,
+.employee-form select:focus {
+    border-color: #2864e8;
+
+    box-shadow:
+        0 0 0 3px rgba(40, 100, 232, 0.1);
+}
+
+
+.error {
+    margin: 5px 0 0;
+
+    color: #dc2626;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   FORM ACTIONS
+========================= */
+
+.employee-form-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 22px;
+}
+
+
+.cancel-button,
+.save-button {
+    padding: 10px 16px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.cancel-button {
+    border: 1px solid #d9dce1;
+
+    background: #ffffff;
+
+    color: #444;
+}
+
+
+.cancel-button:hover {
+    background: #f8f9fa;
+}
+
+
+.save-button {
+    border: none;
+
+    background: #2864e8;
+
+    color: #ffffff;
+}
+
+
+.save-button:hover {
+    opacity: 0.9;
+}
+
+
+/* =========================
+   LIST HEADER
+========================= */
+
+.employee-list-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 16px;
+}
+
+
+.employee-list-header h2 {
+    margin: 0;
+
+    font-size: 20px;
+
+    color: #111827;
+}
+
+
+.employee-list-header span {
+    font-size: 13px;
+
+    color: #666;
+}
+
+
+/* =========================
+   LIST
+========================= */
+
+.employee-list {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+
+.no-results {
+    grid-column: 1 / -1;
+
+    margin: 0;
+
+    padding: 40px;
+
+    text-align: center;
+
+    color: #666;
+
+    font-size: 15px;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+
+    .employee-tools {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .employee-list {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .employees-page {
+        padding: 16px;
+    }
+
+
+    .employees-header {
+        align-items: flex-start;
+
+        gap: 15px;
+
+        flex-direction: column;
+    }
+
+
+    .add-employee-button {
+        width: 100%;
+    }
+
+
+    .employee-tools {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .employee-form {
+        padding: 18px;
+    }
+
+
+    .employee-form-actions {
+        flex-direction: column;
+    }
+
+
+    .cancel-button,
+    .save-button {
+        width: 100%;
+    }
+
+
+    .employee-list-header {
+        align-items: flex-start;
+
+        gap: 8px;
+
+        flex-direction: column;
+    }
+
+}

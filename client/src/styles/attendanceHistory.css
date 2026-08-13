@@ -1,0 +1,32 @@
+.attendance-history {
+    margin-top: 30px;
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+}
+
+.attendance-history h2 {
+    margin-bottom: 20px;
+}
+
+.attendance-history-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.attendance-history-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.attendance-history-row:last-child {
+    border-bottom: none;
+}
+
+.attendance-history-date {
+    font-weight: 500;
+}

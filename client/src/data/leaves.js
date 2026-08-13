@@ -1,0 +1,32 @@
+export const initialLeaves = [
+  {
+    id: 1,
+    employeeId: 1,
+    employeeName: "Rahul",
+    leaveType: "Casual Leave",
+    startDate: "2026-08-10",
+    endDate: "2026-08-11",
+    reason: "Personal work",
+    status: "Pending",
+  },
+  {
+    id: 2,
+    employeeId: 2,
+    employeeName: "Sahil",
+    leaveType: "Sick Leave",
+    startDate: "2026-08-12",
+    endDate: "2026-08-12",
+    reason: "Not feeling well",
+    status: "Approved",
+  },
+  {
+    id: 3,
+    employeeId: 3,
+    employeeName: "Amit",
+    leaveType: "Casual Leave",
+    startDate: "2026-08-15",
+    endDate: "2026-08-16",
+    reason: "Family function",
+    status: "Rejected",
+  },
+];

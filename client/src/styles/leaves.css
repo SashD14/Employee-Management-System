@@ -1,0 +1,191 @@
+/* =========================
+   LEAVES PAGE
+========================= */
+
+.leaves-page {
+    max-width: 1200px;
+
+    margin: 30px auto;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.leaves-header {
+    margin-bottom: 24px;
+}
+
+
+.leaves-header h1 {
+    margin: 0 0 6px;
+
+    font-size: 28px;
+
+    color: #111827;
+}
+
+
+.leaves-header p {
+    margin: 0;
+
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   STATISTICS
+========================= */
+
+.leave-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+
+    margin-top: 30px;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   CONTROLS
+========================= */
+
+.leave-controls {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-top: 30px;
+
+    margin-bottom: 25px;
+}
+
+
+.leave-search {
+    flex: 1;
+
+    margin-top: 0;
+}
+
+
+.leave-controls select {
+    min-width: 180px;
+}
+
+
+/* =========================
+   RESULTS HEADER
+========================= */
+
+.leave-results-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 16px;
+}
+
+
+.leave-results-header h2 {
+    margin: 0;
+
+    font-size: 20px;
+
+    color: #111827;
+}
+
+
+.leave-results-header span {
+    font-size: 13px;
+
+    color: #666;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+
+    .leave-controls {
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        align-items: stretch;
+    }
+
+
+    .leave-controls select {
+        width: 100%;
+
+        min-width: 0;
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .leaves-page {
+        margin: 20px auto;
+
+        padding: 16px;
+    }
+
+
+    .leave-stats {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .leave-controls {
+        grid-template-columns:
+            1fr;
+
+        gap: 12px;
+    }
+
+
+    .leave-results-header {
+        align-items: flex-start;
+
+        gap: 8px;
+
+        flex-direction: column;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .leaves-page {
+        padding: 14px;
+    }
+
+
+    .leaves-header h1 {
+        font-size: 24px;
+    }
+
+}

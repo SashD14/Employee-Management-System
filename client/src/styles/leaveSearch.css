@@ -1,0 +1,18 @@
+.leave-search {
+    flex: 1;
+    margin-top: 0;
+}
+
+.leave-search input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.leave-search input:focus {
+    outline: none;
+    border-color: #4f46e5;
+}

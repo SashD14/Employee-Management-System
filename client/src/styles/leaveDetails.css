@@ -1,0 +1,118 @@
+.leave-details-card {
+    margin-top: 30px;
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+    max-width: 700px;
+}
+
+.leave-detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.leave-detail-item:last-child {
+    border-bottom: none;
+}
+
+.leave-detail-item span {
+    color: #666;
+    font-size: 14px;
+}
+
+.leave-detail-item strong {
+    font-size: 15px;
+}
+.leave-detail-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.leave-detail-actions button {
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.leave-detail-approve {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.leave-detail-reject {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.leave-detail-approve:hover {
+    transform: translateY(-2px);
+}
+
+.leave-detail-reject:hover {
+    transform: translateY(-2px);
+}
+/* =========================
+   DETAILS HEADER
+========================= */
+
+.leave-details-header {
+    margin-bottom: 20px;
+}
+
+
+.leave-details-header h1 {
+    margin: 0 0 6px;
+
+    font-size: 28px;
+
+    color: #111827;
+}
+
+
+.leave-details-header p {
+    margin: 0;
+
+    font-size: 14px;
+
+    color: #666;
+}
+
+
+/* =========================
+   NOT FOUND
+========================= */
+
+.leave-not-found {
+    padding: 40px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+}
+
+
+.leave-not-found h1 {
+    margin: 0 0 8px;
+
+    color: #111827;
+}
+
+
+.leave-not-found p {
+    margin: 0;
+
+    color: #666;
+}

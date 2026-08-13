@@ -1,0 +1,57 @@
+.employee-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:white;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.employee-avatar{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:#4f46e5;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:34px;
+    font-weight:bold;
+}
+
+.employee-info{
+    flex:1;
+    margin-left:25px;
+}
+
+.employee-info h1{
+    margin:0;
+    font-size:32px;
+}
+
+.employee-info p{
+    margin:8px 0;
+    color:#555;
+}
+
+.employee-info span{
+    color:#777;
+}
+
+.status{
+    padding:10px 20px;
+    border-radius:30px;
+    font-weight:600;
+}
+
+.active{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.inactive{
+    background:#fee2e2;
+    color:#b91c1c;
+}

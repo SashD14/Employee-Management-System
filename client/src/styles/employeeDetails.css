@@ -1,0 +1,19 @@
+.employee-details{
+    max-width:1200px;
+    margin:30px auto;
+    padding:20px;
+}
+
+.details-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:25px;
+    margin-top:30px;
+}
+@media (max-width: 768px){
+
+    .details-grid{
+        grid-template-columns:1fr;
+    }
+
+}

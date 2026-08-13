@@ -1,0 +1,28 @@
+.personal-info{
+    margin-top:30px;
+    background:white;
+    border-radius:16px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.personal-info h2{
+    margin-bottom:20px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.info-item span{
+    color:#777;
+    font-size:14px;
+}
+
+.info-item p{
+    margin-top:6px;
+    font-size:17px;
+    font-weight:600;
+}

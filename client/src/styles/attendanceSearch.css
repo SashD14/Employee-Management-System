@@ -1,0 +1,16 @@
+.attendance-search{
+    margin:30px 0;
+}
+
+.attendance-search input{
+    width:100%;
+    padding:14px 18px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    font-size:16px;
+}
+
+.attendance-search input:focus{
+    outline:none;
+    border-color:#4f46e5;
+}

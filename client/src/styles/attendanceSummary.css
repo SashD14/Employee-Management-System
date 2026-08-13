@@ -1,0 +1,83 @@
+.attendance-summary {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.attendance-summary h2 {
+    margin: 0 0 20px;
+    font-size: 22px;
+}
+
+.attendance-summary-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.attendance-summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+}
+
+.attendance-summary-row:last-child {
+    border-bottom: none;
+}
+
+.attendance-summary-row span {
+    color: #222;
+}
+
+.attendance-summary-row strong {
+    font-weight: 700;
+    color: #111;
+}
+.attendance-rate-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-top: 16px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid #eeeeee;
+}
+
+
+.attendance-rate-row div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.attendance-rate-row span {
+    font-weight: 600;
+
+    color: #333;
+}
+
+
+.attendance-rate-row small {
+    font-size: 12px;
+
+    color: #777;
+}
+
+
+.attendance-rate-row strong {
+    font-size: 22px;
+
+    color: #2864e8;
+}

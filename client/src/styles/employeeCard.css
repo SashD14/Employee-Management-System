@@ -1,0 +1,39 @@
+.employee-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.employee-card:hover {
+    transform: translateY(-5px);
+}
+
+.employee-card h3 {
+    margin: 0;
+    font-size: 22px;
+    color: #111827;
+}
+
+.employee-card p {
+    margin-top: 8px;
+    color: #6b7280;
+    font-size: 16px;
+}
+.green {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.red {
+    color: #dc2626;
+    font-weight: 600;
+}
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}

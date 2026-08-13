@@ -1,0 +1,32 @@
+.attendance-status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.attendance-status-badge.present {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.attendance-status-badge.absent {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.attendance-status-badge.leave {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.attendance-status-badge.half-day {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+.attendance-status-badge.not-marked {
+    background: #f3f4f6;
+
+    color: #6b7280;
+}

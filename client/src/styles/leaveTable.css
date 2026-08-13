@@ -1,0 +1,164 @@
+.leave-table {
+    margin-top: 30px;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+    overflow-x: auto;
+}
+
+.leave-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.leave-table th,
+.leave-table td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.leave-table th {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.leave-table td {
+    font-size: 14px;
+}
+
+.leave-table tr:last-child td {
+    border-bottom: none;
+}
+.leave-action-button {
+    border: none;
+    padding: 7px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 13px;
+    margin-right: 8px;
+}
+
+.leave-approve-button {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.leave-reject-button {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+/* =========================
+   LEAVE DATES
+========================= */
+
+.leave-dates {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    white-space: nowrap;
+}
+
+
+.leave-date-separator {
+    color: #999;
+}
+
+
+/* =========================
+   ACTIONS
+========================= */
+
+.leave-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.leave-table-empty {
+    padding: 50px 20px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0, 0, 0, 0.05);
+}
+
+
+.leave-empty-icon {
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto 14px;
+
+    border-radius: 50%;
+
+    background: #f3f4f6;
+
+    color: #6b7280;
+
+    font-weight: 600;
+}
+
+
+.leave-table-empty h3 {
+    margin: 0 0 6px;
+
+    font-size: 16px;
+
+    color: #111827;
+}
+
+
+.leave-table-empty p {
+    margin: 0;
+
+    color: #666;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   MOBILE TABLE
+========================= */
+
+@media (max-width: 800px) {
+
+    .leave-table {
+        width: 100%;
+
+        overflow-x: auto;
+    }
+
+
+    .leave-table table {
+        min-width: 850px;
+    }
+
+}

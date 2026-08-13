@@ -1,0 +1,217 @@
+/* =========================
+   ATTENDANCE PAGE
+========================= */
+
+.attendance-page {
+    max-width: 1200px;
+
+    margin: 30px auto;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.attendance-page-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 24px;
+}
+
+
+.attendance-page-header h1 {
+    margin: 0 0 6px;
+
+    font-size: 28px;
+
+    color: #111827;
+}
+
+
+.attendance-page-header p {
+    margin: 0;
+
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   DATE SELECTOR
+========================= */
+
+.attendance-date-selector {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    min-width: 190px;
+}
+
+
+.attendance-date-selector label {
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #555;
+}
+
+
+.attendance-date-selector select {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #222;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.attendance-date-selector select:focus {
+    border-color: #2864e8;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(40, 100, 232, 0.1);
+}
+
+
+/* =========================
+   STATISTICS
+========================= */
+
+.attendance-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 20px;
+
+    margin-top: 30px;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   FILTERS
+========================= */
+
+.attendance-filters {
+    display: flex;
+
+    gap: 20px;
+
+    margin-bottom: 30px;
+}
+
+
+.attendance-filters select {
+    min-width: 200px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+
+    .attendance-stats {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .attendance-page {
+        margin: 20px auto;
+
+        padding: 16px;
+    }
+
+
+    .attendance-page-header {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+
+    .attendance-date-selector {
+        width: 100%;
+    }
+
+
+    .attendance-stats {
+        grid-template-columns:
+            1fr;
+
+        gap: 14px;
+    }
+
+
+    .attendance-filters {
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+
+    .attendance-filters select {
+        width: 100%;
+
+        min-width: 0;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .attendance-page {
+        padding: 14px;
+    }
+
+
+    .attendance-page-header h1 {
+        font-size: 24px;
+    }
+
+}

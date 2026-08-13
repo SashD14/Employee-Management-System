@@ -1,0 +1,385 @@
+.pending-leaves {
+    background: #ffffff;
+
+    padding: 24px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.pending-leaves-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+
+.pending-leaves-header h2 {
+    margin: 0 0 5px;
+
+    font-size: 19px;
+
+    color: #111827;
+}
+
+
+.pending-leaves-header p {
+    margin: 0;
+
+    color: #666;
+
+    font-size: 13px;
+}
+
+
+.pending-count {
+    min-width: 32px;
+
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #fff3df;
+
+    color: #d98200;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================
+   LIST
+========================= */
+
+.pending-leaves-list {
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.pending-leave-row {
+    display: grid;
+
+    grid-template-columns:
+        minmax(180px, 1fr)
+        minmax(180px, 1fr)
+        auto;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+.pending-leave-row:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================
+   EMPLOYEE
+========================= */
+
+.pending-leave-employee {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 0;
+}
+
+
+.pending-leave-avatar {
+    width: 40px;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef2ff;
+
+    color: #2864e8;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    flex-shrink: 0;
+}
+
+
+.pending-leave-employee h3 {
+    margin: 0 0 4px;
+
+    font-size: 14px;
+
+    color: #111827;
+}
+
+
+.pending-leave-employee p {
+    margin: 0;
+
+    font-size: 13px;
+
+    color: #666;
+}
+
+
+/* =========================
+   LEAVE DETAILS
+========================= */
+
+.pending-leave-details {
+    font-size: 13px;
+
+    color: #666;
+}
+
+
+.pending-leave-details span {
+    white-space: nowrap;
+}
+
+
+/* =========================
+   VIEW BUTTON
+========================= */
+
+.pending-view-button {
+    border: 1px solid #2864e8;
+
+    background: transparent;
+
+    color: #2864e8;
+
+    padding: 7px 14px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.pending-view-button:hover {
+    background: #2864e8;
+
+    color: #ffffff;
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.no-pending-leaves {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 30px 10px;
+}
+
+
+.success-icon {
+    width: 28px;
+
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+    font-weight: 700;
+}
+
+
+.no-pending-leaves p {
+    margin: 0;
+
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.pending-leaves-footer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-top: 16px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #eeeeee;
+
+    font-size: 13px;
+
+    color: #666;
+}
+
+
+.pending-leaves-footer button {
+    border: none;
+
+    background: transparent;
+
+    color: #2864e8;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.pending-leaves-footer button:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+
+    .pending-leaves {
+        padding: 18px;
+    }
+
+
+    .pending-leave-row {
+        grid-template-columns: 1fr auto;
+
+        gap: 12px;
+    }
+
+
+    .pending-leave-details {
+        grid-column: 1;
+
+        padding-left: 52px;
+    }
+
+
+    .pending-view-button {
+        grid-column: 2;
+
+        grid-row: 1 / span 2;
+    }
+
+
+    .pending-leaves-footer {
+        align-items: flex-start;
+
+        gap: 10px;
+
+        flex-direction: column;
+    }
+
+}
+/* =========================
+   VIEW BUTTON
+========================= */
+
+.pending-leave-view-button {
+    padding: 7px 14px;
+
+    border: 1px solid #2864e8;
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #2864e8;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.pending-leave-view-button:hover {
+    background: #2864e8;
+
+    color: #ffffff;
+}
+
+
+/* =========================
+   LEAVE DATES
+========================= */
+
+.pending-leave-dates {
+    margin-left: auto;
+    margin-right: 30px;
+
+    color: #555;
+
+    font-size: 13px;
+}

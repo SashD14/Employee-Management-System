@@ -1,0 +1,247 @@
+.activity-feed {
+    background: #ffffff;
+
+    padding: 24px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.activity-feed-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.activity-feed-header h2 {
+    margin: 0 0 5px;
+
+    font-size: 19px;
+
+    color: #111827;
+}
+
+.activity-feed-header p {
+    margin: 0;
+
+    font-size: 13px;
+
+    color: #666;
+}
+
+
+/* =========================
+   COUNT
+========================= */
+
+.activity-feed-count {
+    min-width: 32px;
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef2ff;
+
+    color: #2864e8;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================
+   ACTIVITY LIST
+========================= */
+
+.activity-feed-list {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.activity-feed-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.activity-feed-item:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================
+   ICON
+========================= */
+
+.activity-feed-icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #f3f4f6;
+
+    color: #2864e8;
+
+    font-size: 15px;
+
+    font-weight: 600;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.activity-feed-content {
+    min-width: 0;
+}
+
+.activity-feed-content p {
+    margin: 0 0 4px;
+
+    font-size: 14px;
+
+    line-height: 1.4;
+
+    color: #222;
+}
+
+.activity-feed-content span {
+    font-size: 12px;
+
+    color: #888;
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.activity-feed-empty {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 30px 10px;
+}
+
+.activity-feed-empty-icon {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+.activity-feed-empty p {
+    margin: 0;
+
+    font-size: 14px;
+
+    color: #666;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.activity-feed-footer {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 16px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #eeeeee;
+
+    font-size: 13px;
+
+    color: #666;
+}
+
+.activity-feed-footer button {
+    border: none;
+
+    background: transparent;
+
+    color: #2864e8;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.activity-feed-footer button:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+    .activity-feed {
+        padding: 18px;
+    }
+
+    .activity-feed-footer {
+        align-items: flex-start;
+
+        gap: 10px;
+
+        flex-direction: column;
+    }
+}

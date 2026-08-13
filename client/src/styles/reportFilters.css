@@ -1,0 +1,79 @@
+.report-filters {
+    background: white;
+    padding: 20px 22px;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .06);
+
+    display: flex;
+    align-items: flex-end;
+    gap: 24px;
+
+    margin-bottom: 25px;
+}
+
+.report-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.report-filter-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+}
+
+.report-filter-group select {
+    min-width: 200px;
+    padding: 10px 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    background: white;
+    color: #333;
+
+    font-size: 14px;
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.report-filter-group select:hover {
+    border-color: #bbb;
+}
+
+.report-filter-group select:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.08);
+}
+
+@media (max-width: 900px) {
+    .report-filters {
+        flex-wrap: wrap;
+        align-items: stretch;
+    }
+
+    .report-filter-group {
+        flex: 1;
+        min-width: 180px;
+    }
+
+    .report-filter-group select {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .report-filters {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .report-filter-group {
+        width: 100%;
+    }
+}
