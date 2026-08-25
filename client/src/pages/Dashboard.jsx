@@ -18,32 +18,52 @@ import {
   FaClock,
 } from "react-icons/fa";
 
+
 function Dashboard() {
+
+  // =========================
+  // GET LOGGED-IN USER
+  // =========================
+
+  const storedUser =
+    localStorage.getItem("user");
+
+
+  const user =
+    storedUser
+      ? JSON.parse(storedUser)
+      : null;
+
+
+  const isEmployee =
+    user?.role === "Employee";
+
+
   // =========================
   // CONTEXT DATA
   // =========================
 
-  const { leaves } = useLeaves();
+  const { leaves } =
+    useLeaves();
 
-  const { employees } = useEmployees();
 
-  const { attendance } = useAttendance();
+  const { employees } =
+    useEmployees();
+
+
+  const { attendance } =
+    useAttendance();
+
 
   // =========================
-  // DASHBOARD DATE
+  // TODAY'S DATE
   // =========================
-
-  /*
-   * Our demo attendance data currently
-   * contains records up to 2026-08-08.
-   *
-   * We use the latest attendance date
-   * available in the data instead of
-   * hardcoding the date in the filter.
-   */
 
   const today =
-  new Date().toISOString().split("T")[0];
+    new Date()
+      .toISOString()
+      .split("T")[0];
+
 
   // =========================
   // TODAY'S ATTENDANCE
@@ -52,49 +72,83 @@ function Dashboard() {
   const todayAttendance =
     attendance.filter(
       (record) =>
-        record.date === today &&
-        employees.some(
-          (employee) =>
-            employee.id === record.employeeId
-        )
-  );
+        record.date === today
+    );
 
-  const presentToday = todayAttendance.filter(
-    (record) => record.status === "Present"
-  ).length;
 
-  const absentToday = todayAttendance.filter(
-    (record) => record.status === "Absent"
-  ).length;
+  // =========================
+  // PRESENT TODAY
+  // =========================
 
-  const leaveToday = todayAttendance.filter(
-    (record) => record.status === "Leave"
-  ).length;
+  const presentToday =
+    todayAttendance.filter(
+      (record) =>
+        record.status === "Present"
+    ).length;
 
-  const halfDayToday = todayAttendance.filter(
-    (record) => record.status === "Half Day"
-  ).length;
+
+  // =========================
+  // ABSENT TODAY
+  // =========================
+
+  const absentToday =
+    todayAttendance.filter(
+      (record) =>
+        record.status === "Absent"
+    ).length;
+
+
+  // =========================
+  // ON LEAVE TODAY
+  // =========================
+
+  const leaveToday =
+    todayAttendance.filter(
+      (record) =>
+        record.status === "Leave"
+    ).length;
+
+
+  // =========================
+  // HALF DAY TODAY
+  // =========================
+
+  const halfDayToday =
+    todayAttendance.filter(
+      (record) =>
+        record.status === "Half Day"
+    ).length;
+
 
   // =========================
   // PENDING LEAVES
   // =========================
 
-  const pendingLeaves = leaves.filter(
-    (leave) => leave.status === "Pending"
-  ).length;
+  const pendingLeaves =
+    leaves.filter(
+      (leave) =>
+        leave.status === "Pending"
+    ).length;
+
 
   // =========================
   // TOTAL EMPLOYEES
   // =========================
 
-  const totalEmployees = employees.length;
+  const totalEmployees =
+    isEmployee
+      ? 1
+      : employees.length;
+
 
   // =========================
   // RENDER
   // =========================
 
   return (
+
     <div className="dashboard-page">
+
 
       {/* =========================
           DASHBOARD SUMMARY
@@ -102,67 +156,123 @@ function Dashboard() {
 
       <div className="dashboard">
 
+
         {/* TOTAL EMPLOYEES */}
 
         <DashboardCard
-          title="Employees"
+          title={
+            isEmployee
+              ? "My Profile"
+              : "Employees"
+          }
           count={totalEmployees}
           icon={<FaUsers />}
-          change="Total employees"
+          change={
+            isEmployee
+              ? "Your employee account"
+              : "Total employees"
+          }
           positive={true}
         />
 
-        {/* PRESENT TODAY */}
+
+        {/* PRESENT */}
 
         <Card
-          title="Present Today"
+          title={
+            isEmployee
+              ? "My Attendance"
+              : "Present Today"
+          }
           count={presentToday}
           icon={<FaCalendarCheck />}
-          change="Employees present"
+          change={
+            isEmployee
+              ? "Present today"
+              : "Employees present"
+          }
           positive={true}
         />
 
-        {/* ABSENT TODAY */}
+
+        {/* ABSENT */}
 
         <Card
-          title="Absent Today"
+          title={
+            isEmployee
+              ? "My Absence"
+              : "Absent Today"
+          }
           count={absentToday}
           icon={<FaUserTimes />}
-          change="Employees absent"
+          change={
+            isEmployee
+              ? "Absent today"
+              : "Employees absent"
+          }
           positive={false}
         />
+
 
         {/* ON LEAVE */}
 
         <Card
-          title="On Leave Today"
+          title={
+            isEmployee
+              ? "My Leave"
+              : "On Leave Today"
+          }
           count={leaveToday}
           icon={<FaPlaneDeparture />}
-          change="Employees on leave"
+          change={
+            isEmployee
+              ? "Leave status today"
+              : "Employees on leave"
+          }
           positive={leaveToday === 0}
         />
 
-        {/* HALF DAY TODAY */}
+
+        {/* HALF DAY */}
 
         <Card
-          title="Half Day Today"
+          title={
+            isEmployee
+              ? "My Half Day"
+              : "Half Day Today"
+          }
           count={halfDayToday}
           icon={<FaClock />}
-          change="Employees on half day"
+          change={
+            isEmployee
+              ? "Half day status"
+              : "Employees on half day"
+          }
           positive={true}
         />
+
 
         {/* PENDING LEAVES */}
 
         <Card
-          title="Pending Leaves"
+          title={
+            isEmployee
+              ? "Pending Requests"
+              : "Pending Leaves"
+          }
           count={pendingLeaves}
           icon={<FaPlaneDeparture />}
-          change="Requests awaiting approval"
+          change={
+            isEmployee
+              ? "Your requests awaiting approval"
+              : "Requests awaiting approval"
+          }
           positive={pendingLeaves === 0}
         />
 
+
       </div>
+
 
       {/* =========================
           TODAY'S ATTENDANCE
@@ -170,20 +280,26 @@ function Dashboard() {
 
       <TodayAttendance />
 
+
       {/* =========================
-          PENDING LEAVE REQUESTS
+          PENDING LEAVES
       ========================== */}
 
       <PendingLeaves />
 
+
       {/* =========================
-          RECENT COMPANY ACTIVITY
+          RECENT ACTIVITY
       ========================== */}
 
       <ActivityFeed />
 
+
     </div>
+
   );
+
 }
+
 
 export default Dashboard;

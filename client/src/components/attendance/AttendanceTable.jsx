@@ -107,7 +107,7 @@ function AttendanceTable({
                     <AttendanceStatusSelect
                       value={
                         attendanceRecord?.status ||
-                        "Absent"
+                        "Not Marked"
                       }
                       onChange={(newStatus) =>
                         onUpdateAttendance(

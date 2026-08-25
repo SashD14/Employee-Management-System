@@ -8,6 +8,7 @@ import "../../styles/leaveTable.css";
 function LeaveTable({
   leaves,
   onUpdateStatus,
+  onDelete,
 }) {
 
   const navigate =
@@ -38,6 +39,30 @@ function LeaveTable({
       leaveId,
       newStatus
     );
+  };
+
+
+  // =========================
+  // DELETE LEAVE
+  // =========================
+
+  const handleDelete = (
+    leaveId
+  ) => {
+
+    const confirmed =
+      window.confirm(
+        "Are you sure you want to delete this leave request?"
+      );
+
+
+    if (!confirmed) {
+      return;
+    }
+
+
+    onDelete(leaveId);
+
   };
 
 
@@ -140,6 +165,7 @@ function LeaveTable({
                 {/* DATES */}
 
                 <td>
+
                   <div className="leave-dates">
 
                     <span>
@@ -159,6 +185,7 @@ function LeaveTable({
                     </span>
 
                   </div>
+
                 </td>
 
 
@@ -187,6 +214,7 @@ function LeaveTable({
                 <td>
 
                   <div className="leave-actions">
+
 
                     {/* VIEW */}
 
@@ -241,6 +269,22 @@ function LeaveTable({
 
                     )}
 
+
+                    {/* DELETE */}
+
+                    <button
+                      type="button"
+                      className="leave-action-button leave-delete-button"
+                      onClick={() =>
+                        handleDelete(
+                          leave.id
+                        )
+                      }
+                    >
+                      Delete
+                    </button>
+
+
                   </div>
 
                 </td>
@@ -287,6 +331,7 @@ function formatDate(
       year: "numeric",
     }
   );
+
 }
 
 

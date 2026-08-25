@@ -4,6 +4,7 @@ import LeaveStatCard from "../components/leave/LeaveStatCard";
 import LeaveSearch from "../components/leave/LeaveSearch";
 import LeaveTable from "../components/leave/LeaveTable";
 import FilterDropdown from "../components/common/FilterDropdown";
+import AddLeaveForm from "../components/leave/AddLeaveForm";
 
 import { useLeaves } from "../context/useLeaves";
 import { useEmployees } from "../context/useEmployees";
@@ -29,6 +30,9 @@ function Leaves() {
   const [leaveTypeFilter, setLeaveTypeFilter] =
     useState("All");
 
+  const [showAddLeaveForm, setShowAddLeaveForm] =
+  useState(false);
+
 
   // =========================
   // CONTEXT DATA
@@ -37,6 +41,7 @@ function Leaves() {
   const {
     leaves,
     updateLeaveStatus,
+    deleteLeave,
   } = useLeaves();
 
 
@@ -176,23 +181,33 @@ function Leaves() {
       {/* =========================
           PAGE HEADER
       ========================== */}
+        <div className="leaves-header">
 
-      <div className="leaves-header">
+          <div>
 
-        <div>
+            <h1>
+              Leaves
+            </h1>
 
-          <h1>
-            Leaves
-          </h1>
+            <p>
+              Manage employee leave
+              requests and approvals.
+            </p>
 
-          <p>
-            Manage employee leave
-            requests and approvals.
-          </p>
+          </div>
+
+
+          <button
+            type="button"
+            className="add-leave-button"
+            onClick={() =>
+              setShowAddLeaveForm(true)
+            }
+          >
+            + Add Leave Request
+          </button>
 
         </div>
-
-      </div>
 
 
       {/* =========================
@@ -308,7 +323,17 @@ function Leaves() {
         onUpdateStatus={
           updateLeaveStatus
         }
+        onDelete={deleteLeave}
       />
+      {showAddLeaveForm && (
+
+  <AddLeaveForm
+    onClose={() =>
+      setShowAddLeaveForm(false)
+    }
+  />
+
+)}
 
     </div>
 

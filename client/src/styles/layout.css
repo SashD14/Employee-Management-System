@@ -1,19 +1,47 @@
+/* =========================
+   MAIN LAYOUT
+========================= */
+
 .layout {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+
+    width: 100%;
+    min-height: 100vh;
+
+    overflow-x: hidden;
 }
+
+
+/* =========================
+   CONTENT AREA
+========================= */
 
 .content {
     display: flex;
     flex: 1;
+
+    width: 100%;
+    min-width: 0;
 }
+
+
+/* =========================
+   MAIN PAGE CONTENT
+========================= */
 
 .main-content {
     flex: 1;
+
+    min-width: 0;
+
     padding: 20px;
+
     background-color: #f5f7fa;
+
+    box-sizing: border-box;
 }
+
 
 /* =========================
    RESPONSIVE LAYOUT
@@ -21,16 +49,60 @@
 
 @media (max-width: 768px) {
 
+    .layout {
+        width: 100%;
+        min-width: 0;
+
+        overflow-x: hidden;
+    }
+
+
     .content {
         flex-direction: column;
+
         width: 100%;
         min-width: 0;
     }
 
+
     .main-content {
         width: 100%;
         min-width: 0;
+
+        flex: none;
+
+        padding: 12px;
+
+        overflow-x: hidden;
+
         box-sizing: border-box;
-        padding: 16px;
     }
+
+}
+/* =========================
+   MOBILE SIDEBAR OVERLAY
+========================= */
+
+.sidebar-overlay {
+    display: none;
+}
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    .sidebar-overlay {
+        display: block;
+
+        position: fixed;
+        inset: 0;
+
+        background: rgba(0, 0, 0, 0.45);
+
+        z-index: 999;
+    }
+
 }

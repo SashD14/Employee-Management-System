@@ -5,35 +5,146 @@
 
     border-radius: 14px;
 
-    box-shadow: 0 5px 20px rgba(0, 0, 0, .06);
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.06);
 
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    gap: 8px;
+    align-items: center;
+    gap: 18px;
 
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
 }
 
+
 .report-stat-card:hover {
     transform: translateY(-3px);
 
     box-shadow:
-        0 8px 24px rgba(0, 0, 0, .09);
+        0 8px 24px rgba(0, 0, 0, 0.09);
 }
 
-.report-stat-card span {
+
+/* =========================
+   ICON
+========================= */
+
+.report-stat-icon {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #f3f4f6;
+
+    color: #374151;
+
+    font-size: 20px;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.report-stat-content {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.report-stat-content span {
     color: #666;
+
     font-size: 14px;
     font-weight: 500;
 }
 
-.report-stat-card strong {
+
+.report-stat-content strong {
     color: #111827;
+
     font-size: 30px;
     font-weight: 700;
+
     line-height: 1;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .report-stat-card {
+        min-height: 105px;
+
+        padding: 18px;
+
+        gap: 14px;
+    }
+
+
+    .report-stat-icon {
+        width: 42px;
+        height: 42px;
+
+        font-size: 18px;
+
+        border-radius: 10px;
+    }
+
+
+    .report-stat-content strong {
+        font-size: 26px;
+    }
+
+}
+/* =========================
+   STAT CARD VARIANTS
+========================= */
+
+.report-stat-employees .report-stat-icon {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.report-stat-present .report-stat-icon {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.report-stat-absent .report-stat-icon {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.report-stat-leave .report-stat-icon {
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+.report-stat-half-day .report-stat-icon {
+    background: #fffbeb;
+    color: #d97706;
+}
+
+.report-stat-pending .report-stat-icon {
+    background: #fefce8;
+    color: #ca8a04;
+}
+
+.report-stat-rate .report-stat-icon {
+    background: #f5f3ff;
+    color: #7c3aed;
 }

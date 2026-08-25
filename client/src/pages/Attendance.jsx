@@ -14,6 +14,33 @@ import "../styles/attendance.css";
 function Attendance() {
 
   // =========================
+  // TODAY'S DATE
+  // =========================
+
+  const getTodayDate = () => {
+
+    const today =
+      new Date();
+
+    const year =
+      today.getFullYear();
+
+    const month =
+      String(
+        today.getMonth() + 1
+      ).padStart(2, "0");
+
+    const day =
+      String(
+        today.getDate()
+      ).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+
+  };
+
+
+  // =========================
   // EMPLOYEES
   // =========================
 
@@ -36,8 +63,13 @@ function Attendance() {
   // SELECTED DATE
   // =========================
 
+  // Automatically select today's date
+  // when the Attendance page opens
+
   const [selectedDate, setSelectedDate] =
-    useState("2026-08-08");
+    useState(
+      getTodayDate
+    );
 
 
   // =========================
@@ -58,44 +90,29 @@ function Attendance() {
   // AVAILABLE DATES
   // =========================
 
-  // =========================
-// AVAILABLE DATES
-// =========================
-
-    const today =
-      new Date().toISOString().split("T")[0];
-
-    const availableDates = [
-      ...new Set([
-        today,
-        ...attendance.map(
-          (record) => record.date
-        ),
-      ]),
-    ].sort(
-      (a, b) =>
-        b.localeCompare(a)
-    );
+  const today =
+    getTodayDate();
 
 
-  // =========================
-  // MAKE SURE SELECTED DATE
-  // EXISTS IN DATE LIST
-  // =========================
-
-  const datesToDisplay =
-    availableDates.includes(
-      selectedDate
-    )
-      ? availableDates
-      : [
-          selectedDate,
-          ...availableDates,
-        ];
+  const availableDates = [
+    ...new Set([
+      today,
+      ...attendance
+        .map(
+          (record) =>
+            record.date
+        )
+        .filter(Boolean),
+    ]),
+  ].sort(
+    (a, b) =>
+      b.localeCompare(a)
+  );
 
 
   // =========================
-  // ATTENDANCE FOR SELECTED DATE
+  // ATTENDANCE FOR
+  // SELECTED DATE
   // =========================
 
   const selectedDateAttendance =
@@ -104,9 +121,10 @@ function Attendance() {
         record.date === selectedDate &&
         employees.some(
           (employee) =>
-            employee.id === record.employeeId
+            employee.id ===
+            record.employeeId
         )
-  );
+    );
 
 
   // =========================
@@ -116,28 +134,32 @@ function Attendance() {
   const presentCount =
     selectedDateAttendance.filter(
       (record) =>
-        record.status === "Present"
+        record.status ===
+        "Present"
     ).length;
 
 
   const absentCount =
     selectedDateAttendance.filter(
       (record) =>
-        record.status === "Absent"
+        record.status ===
+        "Absent"
     ).length;
 
 
   const leaveCount =
     selectedDateAttendance.filter(
       (record) =>
-        record.status === "Leave"
+        record.status ===
+        "Leave"
     ).length;
 
 
   const halfDayCount =
     selectedDateAttendance.filter(
       (record) =>
-        record.status === "Half Day"
+        record.status ===
+        "Half Day"
     ).length;
 
 
@@ -148,32 +170,31 @@ function Attendance() {
   const departmentOptions = [
     "All",
     ...new Set(
-      employees.map(
-        (employee) =>
-          employee.department
-      )
+      employees
+        .map(
+          (employee) =>
+            employee.department
+        )
+        .filter(Boolean)
     ),
   ];
 
 
   // =========================
-  // RESET STATUS FILTER
+  // HANDLE DATE CHANGE
   // =========================
 
   function handleDateChange(newDate) {
 
-    setSelectedDate(newDate);
+    setSelectedDate(
+      newDate
+    );
 
-    /*
-     * Reset the status filter when
-     * changing dates.
-     *
-     * This prevents a previous filter
-     * from making the new date appear
-     * empty unexpectedly.
-     */
+    // Reset filters when changing date
 
-    setStatusFilter("All");
+    setStatusFilter(
+      "All"
+    );
 
   }
 
@@ -230,7 +251,7 @@ function Attendance() {
             }
           >
 
-            {datesToDisplay.map(
+            {availableDates.map(
               (date) => (
 
                 <option
@@ -327,23 +348,18 @@ function Attendance() {
 
       <AttendanceTable
         employees={employees}
-        attendance={
-          selectedDateAttendance
-        }
+        attendance={selectedDateAttendance}
         selectedDate={selectedDate}
         searchTerm={searchTerm}
         statusFilter={statusFilter}
-        departmentFilter={
-          departmentFilter
-        }
-        onUpdateAttendance={
-          updateAttendance
-        }
+        departmentFilter={departmentFilter}
+        onUpdateAttendance={updateAttendance}
       />
 
     </div>
 
   );
+
 }
 
 

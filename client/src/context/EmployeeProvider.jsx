@@ -1,59 +1,178 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { initialEmployees } from "../data/employees";
-
+import api from "../api/api";
 import { useActivities } from "./useActivities";
-
 import { EmployeeContext } from "./EmployeeContext";
 
 
 export function EmployeeProvider({ children }) {
 
-  const [employees, setEmployees] =
-    useState(initialEmployees);
+  // =========================
+  // EMPLOYEE STATE
+  // =========================
 
-  const { addActivity } = useActivities();
+  const [employees, setEmployees] =
+    useState([]);
+
+  const [loading, setLoading] =
+    useState(true);
+
+
+  // =========================
+  // ACTIVITY CONTEXT
+  // =========================
+
+  const { addActivity } =
+    useActivities();
+
+
+  // =========================
+  // FETCH EMPLOYEES
+  // =========================
+
+  const fetchEmployees = async () => {
+
+    try {
+
+      const response =
+        await api.get("/employees");
+
+
+      setEmployees(
+        response.data
+      );
+
+      return response.data;
+
+    } catch (error) {
+
+      console.error(
+        "Failed to fetch employees:",
+        error.response?.data ||
+        error.message
+      );
+
+      throw error;
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
+
+
+  // =========================
+  // INITIAL LOAD
+  // =========================
+
+  useEffect(() => {
+
+    const loadEmployees = async () => {
+
+      try {
+
+        const response =
+          await api.get("/employees");
+
+
+        setEmployees(
+          response.data
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Failed to fetch employees:",
+          error.response?.data ||
+          error.message
+        );
+
+      } finally {
+
+        setLoading(false);
+
+      }
+
+    };
+
+
+    loadEmployees();
+
+  }, []);
 
 
   // =========================
   // ADD EMPLOYEE
   // =========================
 
-  const addEmployee = (employeeData) => {
+  const addEmployee = async (
+    employeeData
+  ) => {
 
-    let newEmployee;
+    try {
 
-    setEmployees((currentEmployees) => {
-
-      const nextId =
-        currentEmployees.length > 0
-          ? Math.max(
-              ...currentEmployees.map(
-                (employee) => employee.id
-              )
-            ) + 1
-          : 1;
+      const response =
+        await api.post(
+          "/employees",
+          employeeData
+        );
 
 
-      newEmployee = {
-        id: nextId,
+      const newEmployee = {
+
+        id:
+          response.data.employeeId,
+
         ...employeeData,
+
       };
 
 
-      return [
-        ...currentEmployees,
-        newEmployee,
-      ];
-    });
+      // Update employee state immediately
+
+      setEmployees(
+        (currentEmployees) => [
+          ...currentEmployees,
+          newEmployee,
+        ]
+      );
 
 
-   addActivity({
-      employeeId: newEmployee.id,
-      type: "employee-added",
-      message: `Employee added: ${employeeData.name}`,
-      icon: "+",
-    });
+      // Add activity immediately
+
+      await addActivity({
+
+        employeeId:
+          newEmployee.id,
+
+        type:
+          "employee-added",
+
+        message:
+          `Employee added: ${newEmployee.name}`,
+
+        icon:
+          "+",
+
+      });
+
+
+      return newEmployee;
+
+    } catch (error) {
+
+      console.error(
+        "Failed to add employee:",
+        error.response?.data ||
+        error.message
+      );
+
+      throw error;
+
+    }
+
   };
 
 
@@ -61,44 +180,69 @@ export function EmployeeProvider({ children }) {
   // UPDATE EMPLOYEE
   // =========================
 
-  const updateEmployee = (
+  const updateEmployee = async (
     employeeId,
     updatedData
   ) => {
 
-    let updatedEmployeeName = "";
+    try {
+
+      const response =
+        await api.put(
+          `/employees/${employeeId}`,
+          updatedData
+        );
 
 
-    setEmployees((currentEmployees) => {
+      const updatedEmployee =
+        response.data.employee;
 
-      return currentEmployees.map(
-        (employee) => {
 
-          if (employee.id === employeeId) {
+      // Update frontend immediately
 
-            updatedEmployeeName =
-              updatedData.name || employee.name;
-
-            return {
-              ...employee,
-              ...updatedData,
-            };
-          }
-
-          return employee;
-        }
+      setEmployees(
+        (currentEmployees) =>
+          currentEmployees.map(
+            (employee) =>
+              employee.id === employeeId
+                ? updatedEmployee
+                : employee
+          )
       );
-    });
 
 
-    addActivity({
-      employeeId: employeeId,
-      type: "employee-updated",
-      message: `Employee updated: ${
-        updatedEmployeeName || updatedData.name
-      }`,
-      icon: "↻",
-    });
+      // Add activity immediately
+
+      await addActivity({
+
+        employeeId,
+
+        type:
+          "employee-updated",
+
+        message:
+          `Employee updated: ${updatedEmployee.name}`,
+
+        icon:
+          "↻",
+
+      });
+
+
+      return updatedEmployee;
+
+    } catch (error) {
+
+      console.error(
+        "Failed to update employee:",
+        error.response?.data ||
+        error.message
+      );
+
+      throw error;
+
+    }
+
   };
 
 
@@ -106,56 +250,107 @@ export function EmployeeProvider({ children }) {
   // DELETE EMPLOYEE
   // =========================
 
-  const deleteEmployee = (employeeId) => {
+  const deleteEmployee = async (
+    employeeId
+  ) => {
 
-    let deletedEmployeeName = "";
-
-
-    setEmployees((currentEmployees) => {
+    try {
 
       const employeeToDelete =
-        currentEmployees.find(
+        employees.find(
           (employee) =>
             employee.id === employeeId
         );
 
 
-      if (employeeToDelete) {
-        deletedEmployeeName =
-          employeeToDelete.name;
+      if (!employeeToDelete) {
+        return;
       }
 
 
-      return currentEmployees.filter(
-        (employee) =>
-          employee.id !== employeeId
+      const deletedEmployeeName =
+        employeeToDelete.name;
+
+
+      // Delete from backend
+
+      await api.delete(
+        `/employees/${employeeId}`
       );
-    });
 
 
-    if (deletedEmployeeName) {
+      // Remove immediately from frontend
 
-      addActivity({
-        employeeId: employeeId,
-        type: "employee-deleted",
-        message: `Employee removed: ${deletedEmployeeName}`,
-        icon: "−",
+      setEmployees(
+        (currentEmployees) =>
+          currentEmployees.filter(
+            (employee) =>
+              employee.id !== employeeId
+          )
+      );
+
+
+      // Add activity immediately
+
+      await addActivity({
+
+        employeeId:
+          null,
+
+        type:
+          "employee-deleted",
+
+        message:
+          `Employee removed: ${deletedEmployeeName}`,
+
+        icon:
+          "−",
+
       });
 
+    } catch (error) {
+
+      console.error(
+        "Failed to delete employee:",
+        error.response?.data ||
+        error.message
+      );
+
+      throw error;
+
     }
+
   };
 
 
+  // =========================
+  // CONTEXT PROVIDER
+  // =========================
+
   return (
+
     <EmployeeContext.Provider
       value={{
+
         employees,
+
+        loading,
+
+        fetchEmployees,
+
         addEmployee,
+
         updateEmployee,
+
         deleteEmployee,
+
       }}
     >
+
       {children}
+
     </EmployeeContext.Provider>
+
   );
+
 }

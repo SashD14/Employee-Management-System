@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import MainLayout from "./layouts/MainLayout";
+import ProtectedRoute from "./components/common/ProtectedRoute";
 
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -8,44 +9,198 @@ import Employees from "./pages/Employees";
 import Attendance from "./pages/Attendance";
 import Leaves from "./pages/Leaves";
 import Reports from "./pages/Reports";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import EmployeeDetails from "./pages/EmployeeDetails";
 import LeaveDetails from "./pages/LeaveDetails";
 
 
 function App() {
- return (
-  <Routes>
 
-    <Route path="/" element={<Login />} />
+  return (
 
-    <Route element={<MainLayout />}>
+    <Routes>
 
-      <Route path="/dashboard" element={<Dashboard />} />
 
-      <Route path="/employees" element={<Employees />} />
-
-      <Route path="/attendance" element={<Attendance />} />
-
-      <Route path="/leaves" element={<Leaves />} />
-
-      <Route path="/reports" element={<Reports />} />
+      {/* =========================
+          LOGIN
+      ========================== */}
 
       <Route
-        path="/employees/:id"
-        element={<EmployeeDetails />}
+        path="/"
+        element={<Login />}
       />
+
+
+      {/* =========================
+          PROTECTED APPLICATION
+      ========================== */}
+
       <Route
-        path="/leaves/:id"
-        element={<LeaveDetails />}
+        element={<ProtectedRoute />}
+      >
+
+        <Route
+          element={<MainLayout />}
+        >
+
+
+          {/* =========================
+              DASHBOARD
+              ALL LOGGED-IN USERS
+          ========================== */}
+
+          <Route
+            path="/dashboard"
+            element={<Dashboard />}
+          />
+
+
+          {/* =========================
+              EMPLOYEES
+              ADMIN + HR
+          ========================== */}
+
+          <Route
+            element={
+              <ProtectedRoute
+                allowedRoles={[
+                  "Admin",
+                  "HR",
+                  "Manager",
+
+
+                ]}
+              />
+            }
+          >
+
+            <Route
+              path="/employees"
+              element={<Employees />}
+            />
+
+            <Route
+              path="/employees/:id"
+              element={<EmployeeDetails />}
+            />
+
+          </Route>
+
+
+          {/* =========================
+              ATTENDANCE
+              ADMIN + HR + MANAGER
+          ========================== */}
+
+          <Route
+            element={
+              <ProtectedRoute
+                allowedRoles={[
+                  "Admin",
+                  "HR",
+                  "Manager",
+                  "Employee",
+                ]}
+              />
+            }
+          >
+
+            <Route
+              path="/attendance"
+              element={<Attendance />}
+            />
+
+          </Route>
+
+
+          {/* =========================
+              LEAVES
+              ADMIN + HR + MANAGER
+          ========================== */}
+
+          <Route
+            element={
+              <ProtectedRoute
+                allowedRoles={[
+                  "Admin",
+                  "HR",
+                  "Manager",
+                  "Employee",
+                ]}
+              />
+            }
+          >
+
+            <Route
+              path="/leaves"
+              element={<Leaves />}
+            />
+
+            <Route
+              path="/leaves/:id"
+              element={<LeaveDetails />}
+            />
+
+          </Route>
+
+
+          {/* =========================
+              REPORTS
+              ADMIN + HR + MANAGER
+          ========================== */}
+
+          <Route
+            element={
+              <ProtectedRoute
+                allowedRoles={[
+                  "Admin",
+                  "HR",
+                  "Manager",
+                ]}
+              />
+            }
+          >
+
+            <Route
+              path="/reports"
+              element={<Reports />}
+            />
+
+          </Route>
+
+
+          {/* =========================
+              SETTINGS
+              ALL LOGGED-IN USERS
+          ========================== */}
+
+          <Route
+            path="/settings"
+            element={<Settings />}
+          />
+
+
+        </Route>
+
+      </Route>
+
+
+      {/* =========================
+          NOT FOUND
+      ========================== */}
+
+      <Route
+        path="*"
+        element={<NotFound />}
       />
 
-    </Route>
 
-    <Route path="*" element={<NotFound />} />
+    </Routes>
 
-  </Routes>
-);
+  );
+
 }
+
 
 export default App;

@@ -1,11 +1,18 @@
-import { useLeaves } from "../../context/useLeaves";
 import "../../styles/exportReportButton.css";
 
-function ExportLeaveReportButton({ employees }) {
-  const { leaves } = useLeaves();
+function ExportLeaveReportButton({
+  employees,
+  leaves,
+}) {
 
   const handleExport = () => {
+
     const rows = [];
+
+
+    // =========================
+    // CSV HEADER
+    // =========================
 
     rows.push([
       "Employee",
@@ -14,26 +21,44 @@ function ExportLeaveReportButton({ employees }) {
       "Rejected",
     ]);
 
+
+    // =========================
+    // EMPLOYEE LEAVE DATA
+    // =========================
+
     employees.forEach((employee) => {
-      const employeeLeaves = leaves.filter(
-        (leave) =>
-          leave.employeeId === employee.id
-      );
 
-      const pendingCount = employeeLeaves.filter(
-        (leave) =>
-          leave.status === "Pending"
-      ).length;
+      const employeeLeaves =
+        leaves.filter(
+          (leave) =>
+            leave.employeeId ===
+            employee.id
+        );
 
-      const approvedCount = employeeLeaves.filter(
-        (leave) =>
-          leave.status === "Approved"
-      ).length;
 
-      const rejectedCount = employeeLeaves.filter(
-        (leave) =>
-          leave.status === "Rejected"
-      ).length;
+      const pendingCount =
+        employeeLeaves.filter(
+          (leave) =>
+            leave.status ===
+            "Pending"
+        ).length;
+
+
+      const approvedCount =
+        employeeLeaves.filter(
+          (leave) =>
+            leave.status ===
+            "Approved"
+        ).length;
+
+
+      const rejectedCount =
+        employeeLeaves.filter(
+          (leave) =>
+            leave.status ===
+            "Rejected"
+        ).length;
+
 
       rows.push([
         employee.name,
@@ -41,25 +66,50 @@ function ExportLeaveReportButton({ employees }) {
         approvedCount,
         rejectedCount,
       ]);
+
     });
 
-    const csvContent = rows
-      .map((row) => row.join(","))
-      .join("\n");
 
-    const blob = new Blob(
-      [csvContent],
-      {
-        type: "text/csv;charset=utf-8;",
-      }
-    );
+    // =========================
+    // CREATE CSV CONTENT
+    // =========================
 
-    const url = URL.createObjectURL(blob);
+    const csvContent =
+      rows
+        .map(
+          (row) =>
+            row.join(",")
+        )
+        .join("\n");
 
-    const link = document.createElement("a");
+
+    // =========================
+    // CREATE FILE
+    // =========================
+
+    const blob =
+      new Blob(
+        [csvContent],
+        {
+          type:
+            "text/csv;charset=utf-8;",
+        }
+      );
+
+
+    const url =
+      URL.createObjectURL(blob);
+
+
+    const link =
+      document.createElement("a");
+
 
     link.href = url;
-    link.download = "leave-report.csv";
+
+    link.download =
+      "leave-report.csv";
+
 
     document.body.appendChild(link);
 
@@ -67,16 +117,21 @@ function ExportLeaveReportButton({ employees }) {
 
     document.body.removeChild(link);
 
+
     URL.revokeObjectURL(url);
+
   };
 
+
   return (
+
     <button
       className="export-report-button"
       onClick={handleExport}
     >
       Export Leave Report
     </button>
+
   );
 }
 

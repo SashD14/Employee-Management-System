@@ -1,100 +1,199 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { initialAttendance } from "../data/attendance";
-
-import { useActivities } from "./useActivities";
-import { useEmployees } from "./useEmployees";
+import api from "../api/api";
 
 import { AttendanceContext } from "./AttendanceContext";
+import { useActivities } from "./useActivities";
+
 
 export function AttendanceProvider({ children }) {
 
-  const [attendance, setAttendance] =
-    useState(initialAttendance);
+  // =========================
+  // ATTENDANCE STATE
+  // =========================
 
-  const { addActivity } =
+  const [attendance, setAttendance] =
+    useState([]);
+
+
+  // =========================
+  // ACTIVITIES
+  // =========================
+
+  const { fetchActivities } =
     useActivities();
 
-  const { employees } =
-    useEmployees();
+
+  // =========================
+  // FETCH ATTENDANCE
+  // =========================
+
+  useEffect(() => {
+
+    const loadAttendance = async () => {
+
+      try {
+
+        const response =
+          await api.get("/attendance");
+
+
+        const formattedAttendance =
+          response.data.map(
+            (record) => ({
+
+              id:
+                record.id,
+
+              employeeId:
+                record.employee_id,
+
+              date:
+                record.date,
+
+              status:
+                record.status,
+
+            })
+          );
+
+
+        setAttendance(
+          formattedAttendance
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Failed to fetch attendance:",
+          error.response?.data ||
+          error.message
+        );
+
+      }
+
+    };
+
+
+    loadAttendance();
+
+  }, []);
 
 
   // =========================
   // UPDATE ATTENDANCE
   // =========================
 
-  const updateAttendance = (
+  const updateAttendance = async (
     employeeId,
     selectedDate,
     newStatus
   ) => {
 
-    // =========================
-    // FIND EMPLOYEE
-    // =========================
-
-    const employee =
-      employees.find(
-        (employee) =>
-          employee.id === employeeId
-      );
+    try {
 
 
-    // =========================
-    // UPDATE / CREATE RECORD
-    // =========================
+      // =========================
+      // FIND EXISTING RECORD
+      // =========================
 
-    setAttendance(
-      (currentAttendance) => {
-
-        const existingRecord =
-          currentAttendance.find(
-            (record) =>
-              record.employeeId ===
-                employeeId &&
-              record.date ===
-                selectedDate
-          );
+      const existingRecord =
+        attendance.find(
+          (record) =>
+            record.employeeId ===
+              employeeId &&
+            record.date ===
+              selectedDate
+        );
 
 
-        // =========================
-        // UPDATE EXISTING RECORD
-        // =========================
+      let updatedRecord;
 
-        if (existingRecord) {
 
-          return currentAttendance.map(
-            (record) => {
+      // =========================
+      // UPDATE EXISTING RECORD
+      // =========================
 
-              if (
-                record.employeeId ===
-                  employeeId &&
-                record.date ===
-                  selectedDate
-              ) {
+      if (existingRecord) {
 
-                return {
-                  ...record,
-                  status: newStatus,
-                };
+        const response =
+          await api.put(
+            `/attendance/${existingRecord.id}`,
+            {
 
-              }
+              employee_id:
+                employeeId,
 
-              return record;
+              date:
+                selectedDate,
+
+              status:
+                newStatus,
 
             }
           );
 
-        }
+
+        updatedRecord = {
+
+          id:
+            response.data.attendance.id,
+
+          employeeId:
+            response.data.attendance.employee_id,
+
+          date:
+            response.data.attendance.date,
+
+          status:
+            response.data.attendance.status,
+
+        };
+
+
+        // Update frontend state
+
+        setAttendance(
+          (currentAttendance) =>
+            currentAttendance.map(
+              (record) =>
+                record.id ===
+                  existingRecord.id
+                  ? updatedRecord
+                  : record
+            )
+        );
+
+
+      } else {
 
 
         // =========================
         // CREATE NEW RECORD
         // =========================
 
-        const newRecord = {
+        const response =
+          await api.post(
+            "/attendance",
+            {
 
-          id: Date.now(),
+              employee_id:
+                employeeId,
+
+              date:
+                selectedDate,
+
+              status:
+                newStatus,
+
+            }
+          );
+
+
+        updatedRecord = {
+
+          id:
+            response.data.attendanceId,
 
           employeeId:
             employeeId,
@@ -108,42 +207,34 @@ export function AttendanceProvider({ children }) {
         };
 
 
-        return [
-          ...currentAttendance,
-          newRecord,
-        ];
+        // Add new record to frontend state
+
+        setAttendance(
+          (currentAttendance) => [
+            ...currentAttendance,
+            updatedRecord,
+          ]
+        );
 
       }
-    );
 
 
-    // =========================
-    // ADD ACTIVITY
-    // =========================
+      // =========================
+      // REFRESH ACTIVITIES
+      // =========================
 
-    if (employee) {
+      await fetchActivities();
 
-      addActivity({
 
-        employeeId:
-          employeeId,
+    } catch (error) {
 
-        type:
-          "attendance-updated",
+      console.error(
+        "Failed to update attendance:",
+        error.response?.data ||
+        error.message
+      );
 
-        message:
-          `${employee.name} marked ${newStatus}`,
-
-        icon:
-          newStatus === "Present"
-            ? "✓"
-            : newStatus === "Absent"
-              ? "×"
-              : newStatus === "Leave"
-                ? "•"
-                : "◐",
-
-      });
+      throw error;
 
     }
 
@@ -151,18 +242,25 @@ export function AttendanceProvider({ children }) {
 
 
   // =========================
-  // CONTEXT
+  // CONTEXT PROVIDER
   // =========================
 
   return (
+
     <AttendanceContext.Provider
       value={{
+
         attendance,
+
         updateAttendance,
+
       }}
     >
+
       {children}
+
     </AttendanceContext.Provider>
+
   );
 
 }

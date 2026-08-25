@@ -2,6 +2,16 @@ import { useState } from "react";
 
 import "../styles/reports.css";
 
+import {
+  FaUsers,
+  FaCalendarCheck,
+  FaUserTimes,
+  FaPlaneDeparture,
+  FaClock,
+  FaHourglassHalf,
+  FaChartLine,
+} from "react-icons/fa";
+
 import { useEmployees } from "../context/useEmployees";
 import { useAttendance } from "../context/useAttendance";
 import { useLeaves } from "../context/useLeaves";
@@ -10,14 +20,13 @@ import AttendanceChart from "../components/reports/AttendanceChart";
 import LeaveChart from "../components/reports/LeaveChart";
 
 import ExportReportButton from "../components/reports/ExportReportButton";
+import ExportLeaveReportButton from "../components/reports/ExportLeaveReportButton";
 
 import ReportStatCard from "../components/reports/ReportStatCard";
 import ReportFilters from "../components/reports/ReportFilters";
 
 import EmployeeAttendanceReport from "../components/reports/EmployeeAttendanceReport";
 import LeaveReport from "../components/reports/LeaveReport";
-
-import ExportLeaveReportButton from "../components/reports/ExportLeaveReportButton";
 
 
 function Reports() {
@@ -62,14 +71,18 @@ function Reports() {
   // =========================
 
   const employeeOptions = [
+
     "All",
 
     ...new Set(
-      employees.map(
-        (employee) =>
-          employee.name
-      )
+      employees
+        .map(
+          (employee) =>
+            employee.name
+        )
+        .filter(Boolean)
     ),
+
   ];
 
 
@@ -78,14 +91,18 @@ function Reports() {
   // =========================
 
   const departmentOptions = [
+
     "All",
 
     ...new Set(
-      employees.map(
-        (employee) =>
-          employee.department
-      )
+      employees
+        .map(
+          (employee) =>
+            employee.department
+        )
+        .filter(Boolean)
     ),
+
   ];
 
 
@@ -119,21 +136,55 @@ function Reports() {
 
 
   // =========================
-  // DATE INFORMATION
+  // GET LATEST ATTENDANCE DATE
   // =========================
 
-  const today =
-    new Date();
+  const attendanceDates =
+    attendance
+      .map(
+        (record) =>
+          record.date
+      )
+      .filter(Boolean);
 
 
-  const todayString =
-    today
+  const latestAttendanceDate =
+    attendanceDates.length > 0
+      ? [...attendanceDates]
+          .sort()
+          .at(-1)
+      : null;
+
+
+  // =========================
+  // REPORT DATE
+  //
+  // Use the latest date available
+  // in attendance data.
+  //
+  // If there is no attendance,
+  // use today's date.
+  // =========================
+
+  const reportDateString =
+    latestAttendanceDate ||
+    new Date()
       .toISOString()
       .split("T")[0];
 
 
+  const reportDate =
+    new Date(
+      `${reportDateString}T23:59:59`
+    );
+
+
+  // =========================
+  // START OF WEEK
+  // =========================
+
   const startOfWeek =
-    new Date(today);
+    new Date(reportDate);
 
 
   const day =
@@ -160,12 +211,24 @@ function Reports() {
   );
 
 
+  // =========================
+  // START OF MONTH
+  // =========================
+
   const startOfMonth =
     new Date(
-      today.getFullYear(),
-      today.getMonth(),
+      reportDate.getFullYear(),
+      reportDate.getMonth(),
       1
     );
+
+
+  startOfMonth.setHours(
+    0,
+    0,
+    0,
+    0
+  );
 
 
   // =========================
@@ -188,13 +251,21 @@ function Reports() {
           );
 
 
+        // Don't include attendance
+        // for deleted employees
+
+        if (!employee) {
+          return false;
+        }
+
+
         // =========================
         // EMPLOYEE FILTER
         // =========================
 
         const matchesEmployee =
           employeeFilter === "All" ||
-          employee?.name ===
+          employee.name ===
             employeeFilter;
 
 
@@ -204,7 +275,7 @@ function Reports() {
 
         const matchesDepartment =
           departmentFilter === "All" ||
-          employee?.department ===
+          employee.department ===
             departmentFilter;
 
 
@@ -215,11 +286,24 @@ function Reports() {
         let matchesPeriod = true;
 
 
-        const recordDate =
-          new Date(
-            `${record.date}T00:00:00`
-          );
+        if (!record.date) {
 
+          matchesPeriod = false;
+
+        }
+
+
+        const recordDate =
+          record.date
+            ? new Date(
+                `${record.date}T00:00:00`
+              )
+            : null;
+
+
+        // =========================
+        // TODAY
+        // =========================
 
         if (
           periodFilter === "Today"
@@ -227,10 +311,14 @@ function Reports() {
 
           matchesPeriod =
             record.date ===
-            todayString;
+            reportDateString;
 
         }
 
+
+        // =========================
+        // THIS WEEK
+        // =========================
 
         if (
           periodFilter ===
@@ -238,13 +326,18 @@ function Reports() {
         ) {
 
           matchesPeriod =
+            recordDate &&
             recordDate >=
               startOfWeek &&
             recordDate <=
-              today;
+              reportDate;
 
         }
 
+
+        // =========================
+        // THIS MONTH
+        // =========================
 
         if (
           periodFilter ===
@@ -252,10 +345,11 @@ function Reports() {
         ) {
 
           matchesPeriod =
+            recordDate &&
             recordDate >=
               startOfMonth &&
             recordDate <=
-              today;
+              reportDate;
 
         }
 
@@ -290,13 +384,21 @@ function Reports() {
           );
 
 
+        // Don't include leaves
+        // of deleted employees
+
+        if (!employee) {
+          return false;
+        }
+
+
         // =========================
         // EMPLOYEE FILTER
         // =========================
 
         const matchesEmployee =
           employeeFilter === "All" ||
-          employee?.name ===
+          employee.name ===
             employeeFilter;
 
 
@@ -306,13 +408,82 @@ function Reports() {
 
         const matchesDepartment =
           departmentFilter === "All" ||
-          employee?.department ===
+          employee.department ===
             departmentFilter;
+
+
+        // =========================
+        // PERIOD FILTER
+        // =========================
+
+        let matchesPeriod = true;
+
+
+        const leaveStartDate =
+          leave.startDate
+            ? new Date(
+                `${leave.startDate}T00:00:00`
+              )
+            : null;
+
+
+        // =========================
+        // TODAY
+        // =========================
+
+        if (
+          periodFilter === "Today"
+        ) {
+
+          matchesPeriod =
+            leave.startDate ===
+            reportDateString;
+
+        }
+
+
+        // =========================
+        // THIS WEEK
+        // =========================
+
+        if (
+          periodFilter ===
+          "This Week"
+        ) {
+
+          matchesPeriod =
+            leaveStartDate &&
+            leaveStartDate >=
+              startOfWeek &&
+            leaveStartDate <=
+              reportDate;
+
+        }
+
+
+        // =========================
+        // THIS MONTH
+        // =========================
+
+        if (
+          periodFilter ===
+          "This Month"
+        ) {
+
+          matchesPeriod =
+            leaveStartDate &&
+            leaveStartDate >=
+              startOfMonth &&
+            leaveStartDate <=
+              reportDate;
+
+        }
 
 
         return (
           matchesEmployee &&
-          matchesDepartment
+          matchesDepartment &&
+          matchesPeriod
         );
 
       }
@@ -320,7 +491,55 @@ function Reports() {
 
 
   // =========================
-  // ATTENDANCE RATE
+  // ATTENDANCE STATISTICS
+  // =========================
+
+  const presentCount =
+    filteredAttendance.filter(
+      (record) =>
+        record.status ===
+        "Present"
+    ).length;
+
+
+  const absentCount =
+    filteredAttendance.filter(
+      (record) =>
+        record.status ===
+        "Absent"
+    ).length;
+
+
+  const leaveCount =
+    filteredAttendance.filter(
+      (record) =>
+        record.status ===
+        "Leave"
+    ).length;
+
+
+  const halfDayCount =
+    filteredAttendance.filter(
+      (record) =>
+        record.status ===
+        "Half Day"
+    ).length;
+
+
+  // =========================
+  // PENDING LEAVE COUNT
+  // =========================
+
+  const pendingLeaveCount =
+    filteredLeaves.filter(
+      (leave) =>
+        leave.status ===
+        "Pending"
+    ).length;
+
+
+  // =========================
+  // MARKED ATTENDANCE
   // =========================
 
   const markedAttendance =
@@ -337,20 +556,16 @@ function Reports() {
     );
 
 
-  const presentRecords =
-    filteredAttendance.filter(
-      (record) =>
-        record.status ===
-        "Present"
-    ).length;
-
+  // =========================
+  // ATTENDANCE RATE
+  // =========================
 
   const attendanceRate =
     markedAttendance.length === 0
       ? 0
       : Math.round(
           (
-            presentRecords /
+            presentCount /
             markedAttendance.length
           ) * 100
         );
@@ -369,17 +584,31 @@ function Reports() {
           PAGE HEADER
       ========================== */}
 
-      <h1>
-        Reports
-      </h1>
-
-
       <div className="reports-header">
 
-        <p>
-          View attendance, leave,
-          and employee reports.
-        </p>
+        <div>
+
+          <h1>
+            Reports
+          </h1>
+
+          <p>
+            View attendance, leave,
+            and employee reports.
+          </p>
+
+        </div>
+
+
+        <div className="reports-reference-date">
+
+          Report date:{" "}
+
+          {formatDate(
+            reportDateString
+          )}
+
+        </div>
 
       </div>
 
@@ -448,11 +677,8 @@ function Reports() {
 
 
         <ExportLeaveReportButton
-
-          employees={
-            filteredEmployees
-          }
-
+          employees={filteredEmployees}
+          leaves={filteredLeaves}
         />
 
       </div>
@@ -464,6 +690,7 @@ function Reports() {
 
       <div className="report-stats">
 
+
         <ReportStatCard
 
           title="Total Employees"
@@ -472,20 +699,74 @@ function Reports() {
             filteredEmployees.length
           }
 
+          icon={<FaUsers />}
+
+          variant="employees"
+
         />
 
 
         <ReportStatCard
 
-          title="Active Employees"
+          title="Present"
 
-          value={
-            filteredEmployees.filter(
-              (employee) =>
-                employee.status ===
-                "Active"
-            ).length
-          }
+          value={presentCount}
+
+          icon={<FaCalendarCheck />}
+
+          variant="present"
+
+        />
+
+
+        <ReportStatCard
+
+          title="Absent"
+
+          value={absentCount}
+
+          icon={<FaUserTimes />}
+
+          variant="absent"
+
+        />
+
+
+        <ReportStatCard
+
+          title="On Leave"
+
+          value={leaveCount}
+
+          icon={<FaPlaneDeparture />}
+
+          variant="leave"
+
+        />
+
+
+        <ReportStatCard
+
+          title="Half Day"
+
+          value={halfDayCount}
+
+          icon={<FaClock />}
+
+          variant="half-day"
+
+        />
+
+
+        <ReportStatCard
+
+          title="Pending Requests"
+
+          value={pendingLeaveCount}
+
+          icon={<FaHourglassHalf />}
+
+          variant="pending"
 
         />
 
@@ -494,11 +775,14 @@ function Reports() {
 
           title="Attendance Rate"
 
-          value={
-            `${attendanceRate}%`
-          }
+          value={`${attendanceRate}%`}
+
+          icon={<FaChartLine />}
+
+          variant="rate"
 
         />
+
 
       </div>
 
@@ -526,6 +810,7 @@ function Reports() {
 
       <div className="report-charts">
 
+
         <AttendanceChart
 
           attendance={
@@ -546,6 +831,7 @@ function Reports() {
           }
 
         />
+
 
       </div>
 
@@ -570,6 +856,38 @@ function Reports() {
     </div>
 
   );
+
+}
+
+
+// =========================
+// FORMAT DATE
+// =========================
+
+function formatDate(
+  dateString
+) {
+
+  if (!dateString) {
+    return "-";
+  }
+
+
+  const date =
+    new Date(
+      `${dateString}T00:00:00`
+    );
+
+
+  return date.toLocaleDateString(
+    "en-GB",
+    {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }
+  );
+
 }
 
 
